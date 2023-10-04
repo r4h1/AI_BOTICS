@@ -21,15 +21,15 @@ r = sr.Recognizer()
 mic = sr.Microphone()
 
 conectado = False
-porta = 'COM4'
-velocidadeBaud = 9600
+porta = 'COM4' # Porta COM, selecionar a mesma do Arduino
+velocidadeBaud = 9600 # Velocidade também deve ser igual ao código do Arduino
 
 mensagensRecebidas = 1;
 desligarArduinoThread = False
 
 falarTexto = False;
 textoRecebido = ""
-SerialArduino = serial.Serial(porta, velocidadeBaud, timeout = 0.2)
+SerialArduino = serial.Serial(porta, velocidadeBaud, timeout = 0.2) # Nessa parte ativamos a comunicação com a porta serial
 
 engine = pyttsx3.init() # inicia a biblioteca
 
@@ -42,7 +42,7 @@ try:
 except:
     print("Verificar porta serial ou reiniciar arduino")
 
-def handle_data(data):
+def handle_data(data): # 'def' é usado para criar uma função, que é um bloco de código para executar algo especifico
     global mensagensRecebidas, engine, falarTexto, textoRecebido
     print("Recebi " + str(mensagensRecebidas) + ": " + data)
 
@@ -56,9 +56,9 @@ def read_from_port():
     while not conectado:
         conectado = True
 
-        while True:
+        while True: # Laço de repetição 'while' é usado para executar o código 'enquanto' uma condição ainda é verdadeira
            reading = SerialArduino.readline().decode()
-           if reading != "":
+           if reading != "":  # 'if' impoe uma condição 'se'
               handle_data(reading)
            if desligarArduinoThread:
               print("Desligando Arduino")
